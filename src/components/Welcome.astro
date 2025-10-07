@@ -1,9 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
-import AlgorithmSection from './AlgorithmSection.astro'
-import Card from './Card.astro'
+import Card from './ui/Card.astro'
 const algorithms = await getCollection('algorithms')
-console.log('adasdasd')
 ---
 
 <div class='flex min-h-screen flex-col'>

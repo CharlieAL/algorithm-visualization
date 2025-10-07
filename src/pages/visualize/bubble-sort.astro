@@ -1,0 +1,158 @@
+---
+import LayoutVisualize from '@/layouts/LayoutVisualize.astro'
+---
+
+<LayoutVisualize>
+  <section
+    id='container'
+    class='relative flex h-80 w-full items-center gap-0 overflow-hidden rounded-lg border border-black/10 transition-all'
+  >
+    <!-- Bars will be dynamically generated here -->
+  </section>
+</LayoutVisualize>
+
+<style is:inline>
+  #container {
+    gap: 0;
+  }
+  .bar {
+    position: absolute;
+    background: #ffffff;
+    width: 20px;
+    margin: 0 2px;
+    transition:
+      transform 0.3s ease,
+      height 0.3s ease,
+      background 0.2s ease;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+    border-radius: 4px 4px 0 0;
+    bottom: 0;
+  }
+  .bar.comparing {
+    background-color: #ffbf00;
+  }
+
+  .bar.sorted {
+    background-color: #ff09ff;
+  }
+</style>
+
+<script>
+  import { nan } from 'astro:schema'
+
+  let array: number[] = []
+  const container = document.getElementById('container') as HTMLDivElement
+  const resetBtn = document.getElementById('reset') as HTMLButtonElement
+  const startBtn = document.getElementById(
+    'start-visualization'
+  ) as HTMLButtonElement
+  const speedInput = document.getElementById('speed') as HTMLInputElement
+  const speedValue = document.getElementById('speed-value') as HTMLSpanElement
+
+  let delay = 100 // valor inicial de delay
+
+  speedInput.addEventListener('input', () => {
+    speedValue.textContent = speedInput.value
+    delay = parseInt(speedInput.value)
+  })
+
+  // sacar la cantidad de barras que caben en el contenedor
+  let containerWidth = container.clientWidth
+  function updateContainerWidth() {
+    containerWidth = container.clientWidth
+    const numBars = Math.floor(containerWidth / barWidth)
+    generateArray(numBars)
+  }
+  const barWidth = 30
+  let numBars = Math.floor(containerWidth / barWidth)
+
+  function generateArray(size: number = numBars) {
+    container.innerHTML = ''
+    array = []
+
+    for (let i = 0; i < size; i++) {
+      const value = Math.floor(Math.random() * 200) + 20
+      array.push(value)
+
+      const bar = document.createElement('div')
+      bar.classList.add('bar')
+
+      bar.style.height = `${value}px`
+      bar.style.transform = `translateX(${i * barWidth}px)` // Posición inicial
+      container.appendChild(bar)
+    }
+  }
+
+  resetBtn.addEventListener('click', () => {
+    updateContainerWidth()
+    startBtn.disabled = false
+  })
+
+  async function bubbleSort(array: number[], container: HTMLElement) {
+    let bars = Array.from(
+      container.querySelectorAll('.bar')
+    ) as HTMLDivElement[]
+
+    for (let i = 0; i < array.length; i++) {
+      for (let j = 0; j < array.length - i - 1; j++) {
+        // Resaltar las barras que se están comparando
+        bars[j].classList.add('comparing')
+        bars[j + 1].classList.add('comparing')
+
+        await new Promise((resolve) => setTimeout(resolve, delay))
+
+        if (array[j] > array[j + 1]) {
+          // Intercambiar en el array lógico
+          ;[array[j], array[j + 1]] = [array[j + 1], array[j]]
+
+          // Animar el swap visual
+          await swapBars(bars, j, j + 1, container)
+
+          // Actualizar referencia de bars porque el DOM cambió
+          bars = Array.from(container.querySelectorAll('.bar'))
+        }
+
+        bars[j].classList.remove('comparing')
+        bars[j + 1].classList.remove('comparing')
+      }
+      bars[array.length - i - 1].classList.add('sorted')
+    }
+  }
+
+  async function swapBars(
+    bars: HTMLDivElement[],
+    i: number,
+    j: number,
+    container: HTMLElement
+  ) {
+    const barI = bars[i]
+    const barJ = bars[j]
+
+    // Guardar posiciones actuales
+    const transformI = barI.style.transform
+    const transformJ = barJ.style.transform
+
+    // Intercambiar posiciones visualmente
+    barI.style.transform = transformJ
+    barJ.style.transform = transformI
+
+    // Esperar que termine la animación
+    await new Promise((resolve) => setTimeout(resolve, delay))
+
+    // Reordenar el DOM para que el orden refleje la posición real
+    if (j > i) {
+      container.insertBefore(barJ, barI)
+    } else {
+      container.insertBefore(barI, barJ)
+    }
+  }
+
+  startBtn.addEventListener('click', async () => {
+    startBtn.disabled = true
+
+    await bubbleSort(array, container)
+    startBtn.disabled = false
+  })
+
+  generateArray()
+</script>

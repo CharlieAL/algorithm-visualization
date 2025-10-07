@@ -11,9 +11,8 @@ export async function getStaticPaths() {
   }))
 }
 const { algorithm } = Astro.props
-const { data } = algorithm
+const { data, slug } = algorithm
 const { title, description, category, spaceComplexity, timeComplexity } = data
-const { id } = Astro.params
 
 const { Content } = await render(algorithm)
 ---
@@ -25,6 +24,7 @@ const { Content } = await render(algorithm)
     category={category}
     spaceComplexity={spaceComplexity}
     timeComplexity={timeComplexity}
+    slug={slug}
   >
     <Content />
   </AlgorithmSection>

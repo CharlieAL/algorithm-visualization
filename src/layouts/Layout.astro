@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css'
-import Header from '../components/Header.astro'
+import Header from '../components/ui/Header.astro'
 import background from '../assets/background.svg'
 ---
 
@@ -13,9 +13,11 @@ import background from '../assets/background.svg'
     <meta name='generator' content={Astro.generator} />
     <title>Astro Basics</title>
   </head>
-  <body class=''>
+  <body class='overflow-x-hidden'>
     <img id='background' src={background.src} alt='' fetchpriority='high' />
-    <div class='mx-auto w-full px-4 sm:px-6 md:max-w-[800px] lg:px-8'>
+    <div
+      class='mx-auto w-full overflow-x-hidden px-4 sm:px-6 md:max-w-[800px] lg:px-8'
+    >
       <!-- header -->
       <Header />
       <slot />
