@@ -1,0 +1,25 @@
+---
+import Button from './Button.astro'
+---
+
+<header class='sticky top-0 z-10 border-b border-gray-200 backdrop-blur-sm'>
+  <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
+    <div class='flex h-16 items-center justify-between'>
+      <div class='flex items-center space-x-8'>
+        <a class='flex items-center space-x-2' href='#'>
+          <span class='text-xl font-bold'>AlgoVis</span>
+        </a>
+      </div>
+      <div class='flex items-center space-x-4'>
+        <div class='flex items-center space-x-2'>
+          <Button>
+            <span class='material-symbols-outlined'> github </span>
+          </Button>
+          <Button>
+            <span class='material-symbols-outlined'> feedback </span>
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

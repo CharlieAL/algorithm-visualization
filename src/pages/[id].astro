@@ -1,0 +1,31 @@
+---
+import { getCollection, render } from 'astro:content'
+import Layout from '../layouts/Layout.astro'
+import AlgorithmSection from '../components/AlgorithmSection.astro'
+
+export async function getStaticPaths() {
+  const algorithms = await getCollection('algorithms')
+  return algorithms.map((algorithm) => ({
+    params: { id: algorithm.slug },
+    props: { algorithm },
+  }))
+}
+const { algorithm } = Astro.props
+const { data } = algorithm
+const { title, description, category, spaceComplexity, timeComplexity } = data
+const { id } = Astro.params
+
+const { Content } = await render(algorithm)
+---
+
+<Layout>
+  <AlgorithmSection
+    title={title}
+    description={description}
+    category={category}
+    spaceComplexity={spaceComplexity}
+    timeComplexity={timeComplexity}
+  >
+    <Content />
+  </AlgorithmSection>
+</Layout>
