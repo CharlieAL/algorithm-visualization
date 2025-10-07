@@ -2,7 +2,10 @@
 import LayoutVisualize from '@/layouts/LayoutVisualize.astro'
 ---
 
-<LayoutVisualize>
+<LayoutVisualize
+  title='Bubble Sort Visualization'
+  description='Visual representation of the Bubble Sort algorithm.'
+>
   <section
     id='container'
     class='relative flex h-80 w-full items-center gap-0 overflow-hidden rounded-lg border border-black/10 transition-all'
@@ -38,8 +41,6 @@ import LayoutVisualize from '@/layouts/LayoutVisualize.astro'
 </style>
 
 <script>
-  import { nan } from 'astro:schema'
-
   let array: number[] = []
   const container = document.getElementById('container') as HTMLDivElement
   const resetBtn = document.getElementById('reset') as HTMLButtonElement
@@ -149,7 +150,6 @@ import LayoutVisualize from '@/layouts/LayoutVisualize.astro'
 
   startBtn.addEventListener('click', async () => {
     startBtn.disabled = true
-
     await bubbleSort(array, container)
     startBtn.disabled = false
   })

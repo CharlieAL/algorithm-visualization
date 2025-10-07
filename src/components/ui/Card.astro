@@ -1,13 +1,17 @@
 ---
+import Link from './Link.astro'
+
 const { title, description, slug, category } = Astro.props
 ---
 
 <article
   data-link={slug}
-  class='flex h-full cursor-pointer flex-col gap-4 overflow-hidden rounded border border-gray-200 bg-white p-6 transition-all duration-300 hover:-translate-x-[4px] hover:-translate-y-[4px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
+  class='flex h-full flex-col gap-4 overflow-hidden rounded border border-gray-200 bg-white p-6 transition-all duration-300 hover:-translate-x-[4px] hover:-translate-y-[4px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
 >
   <header class='flex items-center justify-between gap-4'>
-    <h3 class='text-lg font-bold text-gray-900'>{title}</h3>
+    <h1 class='text-lg font-bold text-gray-900'>
+      {title}
+    </h1>
     <span
       class='first-letter: rounded-full bg-rose-100 px-2 py-1 text-xs font-semibold text-rose-500'
     >
@@ -18,18 +22,9 @@ const { title, description, slug, category } = Astro.props
     {description}
   </p>
   <footer class='mt-4 flex items-center justify-between'>
-    <a
-      class='text-sm font-medium text-rose-500 hover:underline'
-      href={`visualize/${slug}`}
-    >
-      Visualize →
-    </a>
+    <Link href={`/${slug}`}> Read More → </Link>
+    <Link href={`/${category}/${slug}`}> Visualize Algorithm → </Link>
   </footer>
 </article>
 
-<script>
-  const cart = document.querySelector('article') as HTMLElement
-  cart.addEventListener('click', () => {
-    window.location.href = cart.dataset.link || '#'
-  })
-</script>
+<script></script>
