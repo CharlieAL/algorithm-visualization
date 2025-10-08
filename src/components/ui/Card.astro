@@ -21,7 +21,9 @@ const { title, description, slug, category } = Astro.props
   <p class='flex-grow text-sm text-gray-600'>
     {description}
   </p>
-  <footer class='mt-4 flex items-center justify-between'>
+  <footer
+    class='mt-4 flex flex-col items-center justify-between gap-2 md:flex-row'
+  >
     <Link href={`/${slug}`}> Read More → </Link>
     <Link href={`/${category}/${slug}`}> Visualize Algorithm → </Link>
   </footer>
