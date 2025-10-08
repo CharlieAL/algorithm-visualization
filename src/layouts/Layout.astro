@@ -4,18 +4,25 @@ import Header from '../components/ui/Header.astro'
 import background from '../assets/background.svg'
 ---
 
-<!doctype html>
+<!-- https://algorithm-visualization-roan.vercel.app/logo.jpg --><!doctype html>
 <html lang='en'>
   <head>
-    <meta charset='UTF-8' />
     <meta name='viewport' content='width=device-width' />
+    <title>Algorithm Visualization Tool</title>
+    <meta charset='UTF-8' />
     <link rel='icon' type='image/svg+xml' href='/puzzle.svg' />
     <meta name='generator' content={Astro.generator} />
-    <title>Algorithm Visualization Tool</title>
     <meta
       name='description'
       content='Visualize and understand various algorithms through interactive animations.'
     />
+    <meta property='og:title' content='Algorithm Visualization Tool' />
+    <meta
+      property='og:description'
+      content='Visualize and understand various algorithms through interactive animations.'
+    />
+    <meta property='og:type' content='website' />
+    <meta property='og:image' content='/logo.jpg' />
     <meta
       name='keywords'
       content='algorithms, visualization, sorting, searching, data structures'
